@@ -1,0 +1,35 @@
+name: Sync from Upstream
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Configure Git
+      run: |
+        git config user.name "m0dulo"
+        git config user.email "yuhsin.lyx@gmail.com"
+      
+    - name: Add Upstream Remote
+      run: |
+        git remote add upstream https://github.com/ostar-compiler/ostar.git
+
+    - name: Fetch Upstream
+      run: |
+        git fetch upstream
+      
+    - name: Merge Upstream Changes
+      run: |
+        git merge upstream/main  
+        
+    - name: Push Changes to Personal Repository
+      run: |
+        git push origin main
